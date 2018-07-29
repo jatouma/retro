@@ -13,6 +13,8 @@ def index(request):
 		form = UserCreationForm()
 		return render(request, "retroboard/index.html", {'form': form})
 	latest = Board.objects.latest('id')
+	if not latest.is_started:
+		return render(request, "retroboard/soon.html")
 	context = {
 		'positives': latest.positive_set.all(),
 		'deltas': latest.delta_set.all(),

@@ -15,7 +15,7 @@
     <h1>Open Action Items</h1>
     <ul id="incomplete-list">
 	    {% for action in incomplete %}
-	    <li class="list-group-item bg-primary" id="li{{action.id}}" >
+	    <li class="list-group-item bg-primary" id="li{{action.id}}" style="word-wrap:break-word">
         	{{ action.note }} - <b>{{action.get_submitter}}</b>
         	<button type="button" id="{{action.id}}" class="btn btn-success btn-sm float-right complete-btn col-1">
 	        	Complete

@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 
 class Board(models.Model):
 	sprint = models.CharField(max_length=64, unique=True)
+	is_started = models.BooleanField(default=False)
 
 	def __str__(self):
 		return f"Sprint: {self.sprint}"
