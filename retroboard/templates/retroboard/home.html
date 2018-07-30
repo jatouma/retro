@@ -9,36 +9,43 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-4">
-            <div class="card-columns">
-                {% for positive in positives %}
-	    			<div class="card bg-success positive">
-	        			<b> {{positive.get_submitter}}</b>: {{positive.note}}
-	    			</div>
-				{% endfor %}
-            </div>
+            <h2 class="text-success text-center">Positives</h2>
+            {% for positive in positives %}                    
+                <div class="card bg-success positive mb-3">
+                    <div class="card-header">{{positive.get_submitter}}</div>
+                    <div class="card-body">
+                        <p class="card-text"> {{positive.note}} </p>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
         <div class="col-4">
-            <div class="card-columns">
-            	{% for delta in deltas %}
-	    			<div class="card bg-warning delta">
-	        			<b> {{delta.get_submitter}}</b>:{{delta.note}}
-	    			</div>
-				{% endfor %}
-            </div>
+            <h2 class="text-warning text-center">Deltas</h2>
+            {% for delta in deltas %}                    
+                <div class="card bg-warning delta mb-3">
+                    <div class="card-header">{{delta.get_submitter}}</div>
+                    <div class="card-body">
+                        <p class="card-text"> {{delta.note}} </p>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
         <div class="col-4">
-            <div class="card-columns">
-                {% for action in actions %}
-	    			<div class="card bg-primary action">
-	        			<b> {{action.get_submitter}}</b>:{{action.note}}
-	    			</div>
-				{% endfor %}
-            </div>
+            <h2 class="text-primary text-center">Action Items</h2>
+            {% for action in actions %}                    
+    			<div class="card bg-primary action text-white mb-3">
+                    <div class="card-header">{{action.get_submitter}}</div>
+                    <div class="card-body">
+        			    <p class="card-text"> {{action.note}} </p>
+                    </div>
+    			</div>
+			{% endfor %}
         </div>
     </div>
     <div class="row">
     	<a class="btn btn-secondary btn-lg btn-block" href="{% url 'export' %}">Export</a>
     </div>
+    <br>
 </div>
 
 {% endblock %}
