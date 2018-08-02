@@ -18,9 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.success) {
                     var contents = document.querySelector('#li'+this.id);
                     var item = contents.firstChild.textContent;
+                    var submitter = document.querySelector('#li'+this.id + "_submitter");
                     var li = document.createElement("li");
                     li.appendChild(document.createTextNode(item));
+                    li.appendChild(submitter);
                     li.setAttribute("class", "list-group-item bg-success");
+                    li.setAttribute("style", "word-wrap:break-word");
                     document.querySelector("#complete-list").appendChild(li);
                     document.querySelector("#incomplete-list").removeChild(contents);
                 }
