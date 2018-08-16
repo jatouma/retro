@@ -11,9 +11,11 @@
         <div class="col-4">
             <h2 class="text-success text-center">Positives</h2>
             {% for positive in positives %}                    
-                <div class="card bg-success positive mb-3">
-                    <div class="card-header">{{positive.get_submitter}}</div>
-                    <div class="card-body">
+                <div class="card bg-success positive mb-2">
+                    {% if positive.user %} 
+                    <div class="card-header">{{positive.user}}</div>
+                    {% endif %}
+                    <div class="card-body p-2">
                         <p class="card-text"> {{positive.note}} </p>
                     </div>
                 </div>
@@ -22,9 +24,11 @@
         <div class="col-4">
             <h2 class="text-warning text-center">Deltas</h2>
             {% for delta in deltas %}                    
-                <div class="card bg-warning delta mb-3">
-                    <div class="card-header">{{delta.get_submitter}}</div>
-                    <div class="card-body">
+                <div class="card bg-warning delta mb-2">
+                    {% if delta.user %} 
+                    <div class="card-header">{{delta.user}}</div>
+                    {% endif %}
+                    <div class="card-body p-2">
                         <p class="card-text"> {{delta.note}} </p>
                     </div>
                 </div>
@@ -33,9 +37,11 @@
         <div class="col-4">
             <h2 class="text-primary text-center">Action Items</h2>
             {% for action in actions %}                    
-    			<div class="card bg-primary action text-white mb-3">
-                    <div class="card-header">{{action.get_submitter}}</div>
-                    <div class="card-body">
+    			<div class="card bg-primary action text-white mb-2">
+                    {% if action.user %} 
+                    <div class="card-header">{{action.user}}</div>
+                    {% endif %}
+                    <div class="card-body p-2">
         			    <p class="card-text"> {{action.note}} </p>
                     </div>
     			</div>

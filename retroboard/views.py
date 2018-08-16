@@ -9,9 +9,6 @@ from .models import Board, Positive, Delta, ActionItem
 
 # Create your views here.
 def index(request):
-	if not request.user.is_authenticated:
-		form = UserCreationForm()
-		return render(request, "retroboard/index.html", {'form': form})
 	latest = Board.objects.latest('id')
 	if not latest.is_started:
 		return render(request, "retroboard/soon.html")
@@ -23,9 +20,6 @@ def index(request):
 	return render(request, 'retroboard/home.html', context)
 
 def export_view(request):
-	if not request.user.is_authenticated:
-		form = UserCreationForm()
-		return render(request, "retroboard/index.html", {'form': form})
 	latest = Board.objects.latest('id')
 	sprint = latest.sprint
 	positives = latest.positive_set.all()
@@ -37,7 +31,10 @@ def export_view(request):
 	content += "Positives:"
 	content += "\n"
 	for positive in positives:
-		content+= (str(positive.get_submitter()) + ": " + positive.note)
+		if positive.user:
+			content += str(positive.user)
+			content += ": "
+		content += positive.note
 		content += "\n"
 	
 
@@ -45,21 +42,24 @@ def export_view(request):
 	content += "Deltas:"
 	content += "\n"
 	for delta in deltas:
-		content+= (str(delta.get_submitter()) + ": " + delta.note)
+		if delta.user:
+			content += str(delta.user)
+			content += ": "
+		content += delta.note
 		content += "\n"
 	
 	content += "\n"
 	content += "Action Items:"
 	content += "\n"
 	for action in actions:
-		content+= (str(action.get_submitter()) + ": " + action.note)
+		if action.user:
+			content += str(action.user)
+			content += ": "
+		content += action.note
 		content += "\n"
 	return HttpResponse(content, content_type='text/plain')
 
 def actions_view(request):
-	if not request.user.is_authenticated:
-		form = UserCreationForm()
-		return render(request, "retroboard/index.html", {'form': form})
 	context = {
 		'incomplete': ActionItem.objects.all().filter(is_completed=False),
 		'complete': ActionItem.objects.all().filter(is_completed=True)
@@ -106,20 +106,17 @@ def logout_view(request):
 	return render(request, "retroboard/login.html", {"message": "Logged out."})
 
 def submit_view(request):
-	if not request.user.is_authenticated:
-		form = UserCreationForm()
-		return render(request, "retroboard/index.html", {'form': form})
-
 	if request.method == 'GET':
-		return render(request, "retroboard/submit.html")
+		return render(request, "retroboard/submit.html", {"is_authenticated": request.user.is_authenticated})
 
 	note = request.POST["note"]
 
 	latest = Board.objects.latest('id')	
 
+
 	user = request.user
-	is_anon = request.POST.get('anon', False)
-	if is_anon:
+
+	if "anon" in request.POST or not request.user.is_authenticated:
 		user = None
 
 	sticky_type = request.POST["type"]	

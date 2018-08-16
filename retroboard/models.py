@@ -17,11 +17,6 @@ class Sticky(models.Model):
 	note = models.CharField(max_length=512)
 	created = models.DateTimeField(auto_now_add=True)
 
-	def get_submitter(self):
-		if self.user is not None:
-			return self.user
-		return "Anon"
-
 	class Meta:
 		abstract = True
 
