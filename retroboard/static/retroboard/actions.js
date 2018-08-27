@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     var submitter = document.querySelector('#li'+this.id + "_submitter");
                     var li = document.createElement("li");
                     li.appendChild(document.createTextNode(item));
-                    li.appendChild(submitter);
+                    if(submitter !== null)
+                        li.appendChild(submitter);
                     li.setAttribute("class", "list-group-item bg-success");
                     li.setAttribute("style", "word-wrap:break-word");
                     document.querySelector("#complete-list").appendChild(li);
